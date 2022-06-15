@@ -8,51 +8,7 @@ import GoBackPng from '../../../public/goBack.png'
 import styles from './video.module.scss'
 import { useRef, useState } from 'react'
 import Image from 'next/image'
-
-export const getServerSideProps: GetServerSideProps = async ( pageContext ) => {
-  const url = process.env.ENDPOINT as string
-  const graphQLClient = new GraphQLClient(url, {
-    headers: {
-      "Authorization" : process.env.GRAPH_CMS_TOKEN as string
-    }
-  })
-  const pageSlug = pageContext.query.slug
-
-  const query = gql`
-    query($pageSlug: String!) {
-      video(where: {
-        slug: $pageSlug
-      }) {
-        createdAt,
-        id,
-        title,
-        description,
-        seen,
-        slug,
-        tags,
-        thumbnail {
-          url
-        },
-        mp4 {
-          url
-        }
-      }
-    }
-  `
-
-  const variables = {
-    pageSlug
-  }
-
-  const data = await graphQLClient.request(query, variables)
-  const video = data.video
-
-  return {
-    props: {
-      video,
-    }
-  }
-}
+import Head from 'next/head'
 
 const changeToSeen = async(slug: string) => {
   await fetch('/api/changeToSeen', {
@@ -86,6 +42,9 @@ export default function Video({ video }: VideoProps) {
 
   return (
     <>
+      <Head>
+        <title>{video.title}</title>
+      </Head>
       {!watching && 
       <>
         <img className={styles.videoImage} src={video.thumbnail.url} alt={video.title} />
@@ -137,4 +96,49 @@ export default function Video({ video }: VideoProps) {
       )}
     </>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async ( pageContext ) => {
+  const url = process.env.ENDPOINT as string
+  const graphQLClient = new GraphQLClient(url, {
+    headers: {
+      "Authorization" : process.env.GRAPH_CMS_TOKEN as string
+    }
+  })
+  const pageSlug = pageContext.query.slug
+
+  const query = gql`
+    query($pageSlug: String!) {
+      video(where: {
+        slug: $pageSlug
+      }) {
+        createdAt,
+        id,
+        title,
+        description,
+        seen,
+        slug,
+        tags,
+        thumbnail {
+          url
+        },
+        mp4 {
+          url
+        }
+      }
+    }
+  `
+
+  const variables = {
+    pageSlug
+  }
+
+  const data = await graphQLClient.request(query, variables)
+  const video = data.video
+
+  return {
+    props: {
+      video,
+    }
+  }
 }

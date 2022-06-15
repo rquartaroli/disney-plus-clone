@@ -12,6 +12,7 @@ import StarWarsLogo from '../../public/star-wars-logo.png'
 import styles from './home.module.scss'
 import { Section } from '../components/Section'
 import { NavBar } from '../components/NavBar'
+import Head from 'next/head'
 
 export interface VideosProps {
   videos: [{
@@ -41,6 +42,9 @@ export default function Home( dataApi : VideosProps) {
 
   return (
     <>
+     <Head>
+      <title>Disney+ | Rafael Quartaroli</title>
+     </Head>
      <NavBar username={dataApi.account.username} urlAvatar={dataApi.account.avatar.url} returnDefaultFranchises={() => setSelectFranchise('')} />
      <div>
         <div className={styles.mainVideo}>
