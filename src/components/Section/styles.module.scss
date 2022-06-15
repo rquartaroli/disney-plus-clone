@@ -1,0 +1,22 @@
+.section {
+  margin-bottom: 2rem;
+}
+
+.wrapperCard {
+  display: inline-block;
+  position: relative;
+  width: 19.2%;
+  height: auto;
+  margin: 5px;
+  border-radius: 5%;
+}
+
+.wrapperCardFake {
+  display: inline-block;
+  position: relative;
+  width: 19.2%;
+  height: auto;
+  margin: 5px;
+  border-radius: 5%;
+  opacity: 0;
+}

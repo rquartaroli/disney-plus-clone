@@ -1,0 +1,14 @@
+.card {
+  width: 100%;
+  height: auto;
+  border-radius: 5%;
+  filter: drop-shadow(5px 5px 10px #000);
+  transition: 0.2s;
+
+  &:hover {
+    bottom: 0;
+    position: absolute;
+    z-index: 5;
+    transform: scale(1.5);
+  }
+}
